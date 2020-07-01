@@ -9,6 +9,7 @@ import re
 import math
 import time
 from transaction import *
+from datetime import datetime
 
 def create_IPFS_client():
     return ipfshttpclient.connect(IPFS_HTTP_CLIENT)
@@ -169,25 +170,36 @@ def sign(account, df, memo):
 
 def broadcast(tx, account):
     res = requests.post(url=LCD_API+'/txs', data=tx)
-    if res.json()['raw_log'] == 'not enough personal bandwidth':
-        est = get_recover_estimate(tx, account)
-        if est == False:
-            print('You can\'t broadcast such huge transaction. Increase you balance or decrease chunk variable.')
-            time.sleep(60)
-            pass
-        else:
-            print('Not enough personal bandwidth. Sleep for', '~' + str(math.ceil(est / 60)), 'minutes before the next attempt')
-            time.sleep(est)
-            broadcast(tx, account)
+    if int(res.json()['height']) != 0:
+        print('block #', res.json()['height'])
+        print('tx hash:', res.json()['txhash'])
+    else:
+        try:
+            if res.json()['raw_log'] == 'not enough personal bandwidth':
+                est = get_recover_estimate(tx, account)
+                if est == False:
+                    print(
+                        'You can\'t broadcast such huge transaction. Increase you balance or decrease chunk variable.')
+                    time.sleep(10)
+                    sys.exit()
+                else:
+                    print()
+                    print(datetime.now().strftime("%H:%M:%S"), 'Not enough personal bandwidth. Sleep for', '~' + str(math.ceil(est / 60)),
+                          'minutes before the next attempt')
+                    print('Also, you can increase you balance or decrease chunk variable.')
+                    time.sleep(est)
+                    broadcast(tx, account)
+        except:
+            sys.exit()
 
-    print('block #', res.json()['height'])
-    print('tx hash:', res.json()['txhash'])
+
 
 def processor(query, account, memo):
     if (if_file_exist(PATH_TO_DF)):
         df = create_links_df(query, PATH_TO_DF)
         while (False in df['isLinked'].values):
             tx = sign(account, df, memo)
+            save_to_csv(df, PATH_TO_DF)
             broadcast(tx, account)
             account['sequence'] += 1
     else:
@@ -195,6 +207,7 @@ def processor(query, account, memo):
         df = create_links_df(query, PATH_TO_DF)
         while (False in df['isLinked'].values):
             tx = sign(account, df, memo)
+            save_to_csv(df, PATH_TO_DF)
             broadcast(tx, account)
             account['sequence'] += 1
     save_to_csv(df, PATH_TO_DF)
@@ -209,7 +222,7 @@ def get_recover_estimate(tx, account):
     if band > m_band:
         res = False
     else:
-        rec_speed = m_band / (16000 * 5.5)
+        rec_speed = m_band / (16000 * 5.8)
         est = (band - r_band) / rec_speed
         res = int(math.ceil(est))
     return res
