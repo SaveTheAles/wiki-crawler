@@ -4,6 +4,11 @@ The toolkit for moving IPFS wikipedia articles to the Great Web.
 
 Status: alpha
 
+## Very Important Section!!!
+
+- This is very alpha soft. Highly recommend to create special account for this crawler.
+- Keep `data/links.csv` and don't remove it to avoid invalid transactions to network
+
 ## Requirements
 
 - [x] ipfs version 0.4.22
