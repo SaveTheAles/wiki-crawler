@@ -1,5 +1,6 @@
 from methods import *
-from wallet import seed_to_privkeyimport warnings
+from wallet import seed_to_privkey
+import warnings
 
 warnings.filterwarnings("ignore")
 
