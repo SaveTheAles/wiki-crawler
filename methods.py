@@ -188,16 +188,14 @@ def processor(query, account, memo):
         df = create_links_df(query, PATH_TO_DF)
         while (False in df['isLinked'].values):
             tx = sign(account, df, memo)
-            # broadcast(tx, account)
-            print('broadcasted')
+            broadcast(tx, account)
             account['sequence'] += 1
     else:
         create_link_file(PATH_TO_DF)
         df = create_links_df(query, PATH_TO_DF)
         while (False in df['isLinked'].values):
             tx = sign(account, df, memo)
-            # broadcast(tx, account)
-            print('broadcasted')
+            broadcast(tx, account)
             account['sequence'] += 1
     save_to_csv(df, PATH_TO_DF)
 
