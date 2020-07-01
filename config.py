@@ -14,7 +14,7 @@ RPC_API =
 LCD_API =
 
 # the max amount of cyberlinks in one transaction. int
-CHUNK = 500
+CHUNK = 200
 
 # path to the queries.txt file. str
 QUERIES = './data/queries.txt'
