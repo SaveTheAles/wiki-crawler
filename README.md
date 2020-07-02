@@ -16,6 +16,11 @@ Status: alpha
 
 ## Preparations
 
+0. Clone this repo and got into it:
+```
+git clone https://github.com/SaveTheAles/wiki-crawler.git
+cd wiki-crawler
+```
 1. Install all requirements
 2. Install python packages:
 ```

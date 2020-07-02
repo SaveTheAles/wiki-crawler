@@ -183,7 +183,6 @@ def broadcast(tx, account):
                     time.sleep(10)
                     sys.exit()
                 else:
-                    print()
                     print(datetime.now().strftime("%H:%M:%S"), 'Not enough personal bandwidth. Sleep for', '~' + str(math.ceil(est / 60)),
                           'minutes before the next attempt')
                     print('Also, you can increase you balance or decrease chunk variable.')
