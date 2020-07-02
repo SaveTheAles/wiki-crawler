@@ -24,3 +24,9 @@ CHAIN_ID = 'euler-6'
 
 # account seed phrase. str
 SEED = 
+
+# path to keywords.txt file. str
+KEY_WORDS = './data/keywords.txt'
+
+# path to keywords storage. str
+PATH_TO_KW = './data/keywords.csv'
