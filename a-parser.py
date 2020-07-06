@@ -1,4 +1,3 @@
-from config import *
 from wallet import *
 from methods import *
 import warnings
@@ -34,8 +33,8 @@ for key in kw_dict:
     while ('' in kw_dict[key]):
         kw_dict[key].remove('')
 
-if (if_file_exist(PATH_TO_KW)):
-    df = load_df(PATH_TO_KW)
+if (if_file_exist(PATH_TO_DF)):
+    df = load_df(PATH_TO_DF)
     for key in kw_dict:
         key = to_lower_case(key)
         kw_dict[key] = to_lower_case(kw_dict[key])
@@ -46,8 +45,8 @@ if (if_file_exist(PATH_TO_KW)):
             broadcast(tx, account)
             account['sequence'] += 1
 else:
-    create_link_file(PATH_TO_KW)
-    df = load_df(PATH_TO_KW)
+    create_link_file(PATH_TO_DF)
+    df = load_df(PATH_TO_DF)
     for key in kw_dict:
         key = to_lower_case(key)
         kw_dict[key] = to_lower_case(kw_dict[key])
@@ -57,4 +56,4 @@ else:
             save_to_csv(df, PATH_TO_DF)
             broadcast(tx, account)
             account['sequence'] += 1
-save_to_csv(df, PATH_TO_KW)
+save_to_csv(df, PATH_TO_DF)
