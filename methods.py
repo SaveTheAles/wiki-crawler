@@ -170,26 +170,24 @@ def sign(account, df, memo):
 
 def broadcast(tx, account):
     res = requests.post(url=LCD_API+'/txs', data=tx)
-    if int(res.json()['height']) != 0:
-        print('block #', res.json()['height'])
-        print('tx hash:', res.json()['txhash'])
+    if res.status_code == 200:
+        res = res.json()
     else:
-        try:
-            if res.json()['raw_log'] == 'not enough personal bandwidth':
-                est = get_recover_estimate(tx, account)
-                if est == False:
-                    print(
-                        'You can\'t broadcast such huge transaction. Increase you balance or decrease chunk variable.')
-                    time.sleep(10)
-                    sys.exit()
-                else:
-                    print(datetime.now().strftime("%H:%M:%S"), 'Not enough personal bandwidth. Sleep for', '~' + str(math.ceil(est / 60)),
-                          'minutes before the next attempt')
-                    print('Also, you can increase you balance or decrease chunk variable.')
-                    time.sleep(est)
-                    broadcast(tx, account)
-        except:
+        raise Exception("Broadcact failed to run by returning code of {}".format(res.status_code))
+    if res['height'] != '0':
+        print('block #', res['height'])
+        print('tx hash:', res['txhash'])
+    elif res['raw_log'] == 'not enough personal bandwidth':
+        est = get_recover_estimate(tx, account)
+        if est == False:
+            print('You can\'t broadcast such huge transaction. Increase you balance or decrease chunk variable.')
+            time.sleep(10)
             sys.exit()
+        else:
+            print(datetime.now().strftime("%H:%M:%S"), 'Not enough personal bandwidth. Sleep for', '~' + str(math.ceil(est / 60)), 'minutes before the next attempt')
+            print('Also, you can increase you balance or decrease chunk variable.')
+            time.sleep(est)
+            broadcast(tx, account)
 
 
 
