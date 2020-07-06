@@ -8,10 +8,10 @@ WIKI_IPFS = 'QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco'
 PATH_TO_DF = './data/links.csv'
 
 # cyber RPC API adress ('http://address:port'). str
-RPC_API = 
+RPC_API = 'https://api.cyber.cybernode.ai'
 
 # cyber LCD API adress ('http://address:port'). str
-LCD_API =
+LCD_API = 'https://lcd.cyber.cybernode.ai'
 
 # the max amount of cyberlinks in one transaction. int
 CHUNK = 200
@@ -19,14 +19,11 @@ CHUNK = 200
 # path to the queries.txt file. str
 QUERIES = './data/queries.txt'
 
+# path to the keywords.txt file. str
+KEY_WORDS = './data/keywords.txt'
+
 # the chain ID moniker. str
 CHAIN_ID = 'euler-6'
 
 # account seed phrase. str
-SEED = 
-
-# path to keywords.txt file. str
-KEY_WORDS = './data/keywords.txt'
-
-# path to keywords storage. str
-PATH_TO_KW = './data/keywords.csv'
+SEED = ''
