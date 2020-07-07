@@ -86,10 +86,14 @@ def add_to_df(df, _df):
     return df
 
 def get_wiki_links(query):
-    title = wikipedia.page(query)
-    links = title.links
-    # links = [x for x in links if re.compile(query, re.IGNORECASE).search(x)]
-    links = list(filter(lambda x: query in x, links))
+    try:
+        title = wikipedia.page(query)
+        links = title.links
+        # links = [x for x in links if re.compile(query, re.IGNORECASE).search(x)]
+        links = list(filter(lambda x: query in x, links))
+    except:
+        links = []
+        pass
     return links
 
 def clear_dublicates(df):
