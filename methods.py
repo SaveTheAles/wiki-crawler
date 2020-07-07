@@ -5,7 +5,7 @@ import ipfshttpclient
 import os
 from tqdm import tqdm
 import requests
-import re
+# import re
 import math
 import time
 from transaction import *
@@ -86,13 +86,10 @@ def add_to_df(df, _df):
     return df
 
 def get_wiki_links(query):
-    links = []
-    try:
-        title = wikipedia.page(query)
-        links = title.links
-        links = [x for x in links if re.compile(query, re.IGNORECASE).search(x)]
-    except:
-        pass
+    title = wikipedia.page(query)
+    links = title.links
+    # links = [x for x in links if re.compile(query, re.IGNORECASE).search(x)]
+    links = list(filter(lambda x: query in x, links))
     return links
 
 def clear_dublicates(df):
@@ -108,13 +105,12 @@ def create_links_df(query, csv_path):
     df = load_df(csv_path)
 
     # get links query -> [titles]
-
     print('get links query -> [titles]')
     titles = get_titles(query)
     df = add_data(to_lower_case(query), to_lower_case(titles), df)
     save_to_csv(df, PATH_TO_DF)
-    # get links [titles] -> query
 
+    # get links [titles] -> query
     print('get links [titles] -> query')
     df = add_data(to_lower_case(titles), to_lower_case(query), df)
     save_to_csv(df, PATH_TO_DF)
@@ -130,11 +126,11 @@ def create_links_df(query, csv_path):
     print('get links [urls] -> [links]')
     for title in titles:
         url = get_article_url(title)
-        if df['kw_from'].str.contains(url).any():
-            pass
-        else:
-            wiki_links = get_wiki_links(title)
-            df = add_data(url, to_lower_case(wiki_links), df)
+        # if df['kw_from'].str.contains(url).any():
+        #     pass
+        # else:
+        wiki_links = get_wiki_links(title)
+        df = add_data(url, to_lower_case(wiki_links), df)
         save_to_csv(df, PATH_TO_DF)
 
     df = clear_dublicates(df)
