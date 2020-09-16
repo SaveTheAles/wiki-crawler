@@ -14,7 +14,7 @@ RPC_API = 'https://api.cyber.cybernode.ai'
 LCD_API = 'https://lcd.cyber.cybernode.ai'
 
 # the max amount of cyberlinks in one transaction. int
-CHUNK = 200
+CHUNK = 20
 
 # path to the queries.txt file. str
 QUERIES = './data/queries.txt'
