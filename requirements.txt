@@ -2,7 +2,7 @@ pandas==0.25.3
 wikipedia==1.4.0
 ipfshttpclient==0.6.1
 tqdm==4.40.2
-requests==2.22.0
+requests==2.31.0
 regex==2020.4.4
 typing-extensions==3.7.4.1
 bech32==1.2.0
